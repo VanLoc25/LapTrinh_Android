@@ -1,42 +1,32 @@
-package com.example.dc;
+package com.example.habitcheckcalendar;
 
+import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-
 import android.view.View;
-import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import android.view.Gravity; // Add this line
-
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.EditText;
-import android.widget.GridLayout;
-import android.widget.TextView;
-import android.widget.ListView;
-import android.widget.ArrayAdapter;
 
-import java.text.SimpleDateFormat;
+import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.firebase.crashlytics.buildtools.reloc.com.google.common.reflect.TypeToken;
+import com.google.gson.Gson;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
-
     private CalendarView calendarView;
     private RecyclerView recyclerView;
     private HabitAdapter habitAdapter;
     private List<Habit> habitList = new ArrayList<>();
     private Button buttonAddHabit;
     private String selectedDate;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,11 +36,14 @@ public class MainActivity extends AppCompatActivity {
         calendarView = findViewById(R.id.calendarView);
         recyclerView = findViewById(R.id.recyclerView);
         buttonAddHabit = findViewById(R.id.button_add_habit);
-
+        // Tải danh sách thói quen từ SharedPreferences
+        loadHabitList();
         // Setup RecyclerView
         habitAdapter = new HabitAdapter(habitList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(habitAdapter);
+
+        // Sự kiện chọn ngày từ CalendarView
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
@@ -58,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
                 // Filter habits based on selected date (if needed)
             }
         });
-        // Add new habit
+        // Thêm thói quen mới khi nhấn nút
         buttonAddHabit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
     private void showAddHabitDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Add New Habit");
@@ -80,11 +74,46 @@ public class MainActivity extends AppCompatActivity {
                 String habitName = input.getText().toString();
                 habitList.add(new Habit(habitName, selectedDate, false));
                 habitAdapter.notifyDataSetChanged();
+
+                // Lưu danh sách thói quen vào SharedPreferences
+                saveHabitList();
             }
         });
         builder.setNegativeButton("Cancel", null);
 
         builder.show();
     }
+    private void saveHabitList() {
+        SharedPreferences sharedPreferences = getSharedPreferences("HabitPrefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        // Dùng Gson để chuyển đổi list thành JSON
+        Gson gson;
+        gson = new Gson();
+        String json = gson.toJson(habitList);
+
+        // Lưu JSON vào SharedPreferences
+        editor.putString("habitList", json);
+        editor.apply();  // Áp dụng thay đổi
+    }
+    private void loadHabitList() {
+        SharedPreferences sharedPreferences = getSharedPreferences("HabitPrefs", MODE_PRIVATE);
+
+        // Lấy JSON từ SharedPreferences
+        Gson gson = new Gson();
+        String json = sharedPreferences.getString("habitList", null);
+
+        // Chuyển đổi JSON thành danh sách thói quen
+        Type type = new TypeToken<List<Habit>>() {}.getType();
+        habitList = gson.fromJson(json, type);
+
+        // Nếu không có dữ liệu, khởi tạo danh sách mới
+        if (habitList == null) {
+            habitList = new ArrayList<>();
+        }
+    }
+
+
+
 
 }

@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.dc"
+    namespace = "com.example.habitcheckcalendar"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.dc"
+        applicationId = "com.example.habitcheckcalendar"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
@@ -37,9 +37,12 @@ dependencies {
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
+    implementation(libs.firebase.crashlytics.buildtools)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
 }
-
+dependencies {
+    implementation("com.google.code.gson:gson:2.8.8")  // Hoặc phiên bản mới nhất
+}
 
