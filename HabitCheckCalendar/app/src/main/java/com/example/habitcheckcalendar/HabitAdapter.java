@@ -42,4 +42,5 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.HabitViewHol
             textView = itemView.findViewById(android.R.id.text1);
         }
     }
+
 }

@@ -3,12 +3,12 @@ package com.example.habitcheckcalendar;
 public class Habit {
     private String name;
     private String date; // Date in format yyyy-MM-dd
-    private boolean completed;
+    private boolean isCompleted;
 
     public Habit(String name, String date, boolean completed) {
         this.name = name;
         this.date = date;
-        this.completed = completed;
+        this.isCompleted = completed;
     }
 
     // Getters and Setters
@@ -18,6 +18,6 @@ public class Habit {
     public String getDate() { return date; }
     public void setDate(String date) { this.date = date; }
 
-    public boolean isCompleted() { return completed; }
-    public void setCompleted(boolean completed) { this.completed = completed; }
+    public boolean isCompleted() { return isCompleted; }
+    public void setCompleted(boolean completed) { this.isCompleted = completed; }
 }
