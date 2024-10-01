@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:padding="16dp">
+
+    <!-- Tên thói quen -->
+    <TextView
+        android:id="@+id/habitName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Habit Name"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:padding="8dp"/>
+
+    <!-- Thứ Hai -->
+    <CheckBox
+        android:id="@+id/checkboxMonday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Mon"/>
+
+    <!-- Thứ Ba -->
+    <CheckBox
+        android:id="@+id/checkboxTuesday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tue"/>
+
+    <!-- Thứ Tư -->
+    <CheckBox
+        android:id="@+id/checkboxWednesday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Wed"/>
+
+    <!-- Thứ Năm -->
+    <CheckBox
+        android:id="@+id/checkboxThursday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Thu"/>
+
+    <!-- Thứ Sáu -->
+    <CheckBox
+        android:id="@+id/checkboxFriday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Fri"/>
+
+    <!-- Thứ Bảy -->
+    <CheckBox
+        android:id="@+id/checkboxSaturday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sat"/>
+
+    <!-- Chủ Nhật -->
+    <CheckBox
+        android:id="@+id/checkboxSunday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sun"/>
+</LinearLayout>
